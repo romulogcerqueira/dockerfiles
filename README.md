@@ -28,8 +28,7 @@ Log out and log back in so that your group membership is re-evaluated.
 $ ./build.sh
 ```
 
-### 5. Install workspace
+### 5. Execute the container
 ```console
 $ ./run.sh
-$ install-sonarsim
 ```
