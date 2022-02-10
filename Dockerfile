@@ -54,4 +54,4 @@ RUN usermod  --uid $UUID $USER && \
 COPY install-autoproj.sh /usr/local/bin/install-autoproj
 RUN chmod 755 /usr/local/bin/install-autoproj
 
-CMD ["/usr/sbin/sshd", "-D"]
+CMD ["/bin/bash"]
