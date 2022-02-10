@@ -23,7 +23,7 @@ $ sudo usermod -aG docker <your_username>
 
 Log out and log back in so that your group membership is re-evaluated.
 
-### 4. Build the docker image (based on Ubuntu 18.04)
+### 4. Build the docker image (based on Ubuntu 20.04 - Focal Fossa)
 ```console
 $ ./build.sh
 ```
