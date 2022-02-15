@@ -1,5 +1,6 @@
 ARG BASE_IMAGE
 FROM $BASE_IMAGE
+LABEL maintainer "Rômulo Cerqueira <romulogcerqueira@gmail.com>"
 
 RUN export DEBIAN_FRONTEND=noninteractive; \
     apt-get update && \
