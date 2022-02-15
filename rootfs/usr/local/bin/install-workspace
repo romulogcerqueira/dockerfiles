@@ -1,0 +1,9 @@
+#!/bin/sh
+
+set -e
+
+cd ~/sonar_simulator/
+. ./env.sh
+aup
+amake
+reset-omniorb

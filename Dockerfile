@@ -52,7 +52,11 @@ RUN usermod  --uid $UUID $USER && \
     groupmod --gid $UGID $USER
 
 # Copy workspace script to docker image
-COPY install-autoproj.sh /usr/local/bin/install-autoproj
-RUN chmod 755 /usr/local/bin/install-autoproj
+COPY ./rootfs/ /
+
+RUN chmod 755 /usr/local/bin/install-autoproj; \
+    chmod 755 /usr/local/bin/bootstrap-project; \
+    chmod 755 /usr/local/bin/install-workspace; \
+    chmod 755 /usr/local/bin/reset-omniorb
 
 CMD ["/bin/bash"]
