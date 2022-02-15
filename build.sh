@@ -52,4 +52,4 @@ docker build  \
     --build-arg USER=$CONTAINER_USER \
     --build-arg UUID=$UUID \
     --build-arg UGID=$UGID \
-    -t ${IMAGE_NAME} .
+    -t ${PROJECT}_${DISTRO}:devel .
