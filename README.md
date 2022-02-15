@@ -30,5 +30,5 @@ $ ./build.sh
 
 ### 5. Execute the container
 ```console
-$ ./run.sh
+$ ./run-devel.sh
 ```
