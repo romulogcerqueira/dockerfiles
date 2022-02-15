@@ -1,23 +1,25 @@
 ARG BASE_IMAGE
 FROM $BASE_IMAGE
+LABEL maintainer "Rômulo Cerqueira <romulogcerqueira@gmail.com>"
 
-RUN export DEBIAN_FRONTEND=noninteractive; \
-    apt-get update && \
-    apt-get install -y software-properties-common && \
-    add-apt-repository ppa:brightbox/ruby-ng
+ENV DEBIAN_FRONTEND noninteractive
 
-# Install dependencies
 RUN apt-get update && apt-get install -y \
+        software-properties-common \
+        && add-apt-repository ppa:brightbox/ruby-ng
+
+RUN apt-get update && apt-get install -y \
+        apt-utils \
+        bash-completion \
         build-essential \
-        pkg-config \
-        git \
-        wget \
-        sudo \
+        git  \
+        locales \
+        pkg-config  \
         ruby2.5 \
         ruby2.5-dev \
-        locales \
+        sudo \
         tzdata \
-        bash-completion \
+        wget \
         && apt-get clean \
         && echo "Binary::apt::APT::Keep-Downloaded-Packages \"true\";" | tee /etc/apt/apt.conf.d/bir-keep-cache \
         && rm -rf /etc/apt/apt.conf.d/docker-clean \
@@ -27,7 +29,7 @@ RUN export LANGUAGE=en_US.UTF-8; \
     export LANG=en_US.UTF-8; \
     export LC_ALL=en_US.UTF-8; \
     locale-gen en_US.UTF-8; \
-    DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales
+    dpkg-reconfigure locales
 
 # Set locales
 ENV LANGUAGE=en_US.UTF-8
@@ -51,7 +53,11 @@ RUN usermod  --uid $UUID $USER && \
     groupmod --gid $UGID $USER
 
 # Copy workspace script to docker image
-COPY install-autoproj.sh /usr/local/bin/install-autoproj
-RUN chmod 755 /usr/local/bin/install-autoproj
+COPY ./rootfs/ /
+
+RUN chmod 755 /usr/local/bin/install-autoproj; \
+    chmod 755 /usr/local/bin/bootstrap-project; \
+    chmod 755 /usr/local/bin/install-workspace; \
+    chmod 755 /usr/local/bin/reset-omniorb
 
 CMD ["/bin/bash"]
