@@ -44,12 +44,11 @@ case ${DISTRO} in
         exit 1;;
 esac
 
-CONTAINER_USER=${USER}-${PROJECT}
 IMAGE_NAME=${PROJECT}_${DISTRO}:devel
 
 docker build  \
     --build-arg BASE_IMAGE=$BASE_IMAGE \
-    --build-arg USER=$CONTAINER_USER \
+    --build-arg USER=$USER \
     --build-arg UUID=$UUID \
     --build-arg UGID=$UGID \
     -t ${PROJECT}_${DISTRO}:devel .

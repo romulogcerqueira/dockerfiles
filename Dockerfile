@@ -4,38 +4,35 @@ LABEL maintainer "Rômulo Cerqueira <romulogcerqueira@gmail.com>"
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get update && apt-get install -y \
-        software-properties-common \
-        && add-apt-repository ppa:brightbox/ruby-ng
-
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && \
+    apt-get install -y software-properties-common && \
+    add-apt-repository ppa:brightbox/ruby-ng && \
+    apt-get update && apt-get install -y --no-install-recommends \
         apt-utils \
         bash-completion \
         build-essential \
-        git  \
+        curl \
+        git \
         locales \
-        pkg-config  \
+        pkg-config \
         ruby2.5 \
         ruby2.5-dev \
         sudo \
         tzdata \
-        wget \
-        && apt-get clean \
-        && echo "Binary::apt::APT::Keep-Downloaded-Packages \"true\";" | tee /etc/apt/apt.conf.d/bir-keep-cache \
-        && rm -rf /etc/apt/apt.conf.d/docker-clean \
-        && rm -rf /tmp/* /var/tmp/*
+        wget && \
+    curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash && \
+    apt-get install -y git-lfs && \
+    apt-get clean && \
+    echo "Binary::apt::APT::Keep-Downloaded-Packages \"true\";" | tee /etc/apt/apt.conf.d/bir-keep-cache && \
+    rm -rf /etc/apt/apt.conf.d/docker-clean && \
+    rm -rf /tmp/* /var/tmp/*
 
-RUN export LANGUAGE=en_US.UTF-8; \
-    export LANG=en_US.UTF-8; \
-    export LC_ALL=en_US.UTF-8; \
-    locale-gen en_US.UTF-8; \
-    dpkg-reconfigure locales
-
-# Set locales
-ENV LANGUAGE=en_US.UTF-8
-ENV LANG=en_US.UTF-8
-ENV LC_ALL=en_US.UTF-8
-ENV QT_X11_NO_MITSHM=1
+# Set env variables
+RUN locale-gen en_US.UTF-8
+ENV LANG=en_US.UTF-8 \
+    LANGUAGE=en_US.UTF-8 \
+    LC_ALL=en_US.UTF-8 \
+    QT_X11_NO_MITSHM=1
 
 # Replicate host user to the docker image
 ARG USER
@@ -47,17 +44,16 @@ RUN useradd -m $USER && \
     usermod --shell /bin/bash $USER && \
     usermod -aG sudo $USER && \
     echo "$USER ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/$USER && \
-    chmod 0440 /etc/sudoers.d/$USER
-
-RUN usermod  --uid $UUID $USER && \
+    chmod 0440 /etc/sudoers.d/$USER && \
+    usermod --uid $UUID $USER && \
     groupmod --gid $UGID $USER
 
 # Copy workspace script to docker image
 COPY ./rootfs/ /
 
-RUN chmod 755 /usr/local/bin/install-autoproj; \
-    chmod 755 /usr/local/bin/bootstrap-project; \
-    chmod 755 /usr/local/bin/install-workspace; \
-    chmod 755 /usr/local/bin/reset-omniorb
+RUN chmod 755 /usr/bin/install-autoproj && \
+    chmod 755 /usr/bin/bootstrap-project && \
+    chmod 755 /usr/bin/install-workspace && \
+    chmod 755 /usr/bin/reset-omniorb
 
 CMD ["/bin/bash"]
