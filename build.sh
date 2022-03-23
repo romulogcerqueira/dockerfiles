@@ -51,4 +51,5 @@ docker build  \
     --build-arg USER=$USER \
     --build-arg UUID=$UUID \
     --build-arg UGID=$UGID \
+    --build-arg USERNAME=${PROJECT} \
     -t ${PROJECT}_${DISTRO}:devel .

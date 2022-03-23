@@ -35,18 +35,18 @@ ENV LANG=en_US.UTF-8 \
     QT_X11_NO_MITSHM=1
 
 # Replicate host user to the docker image
-ARG USER
+ARG USERNAME
 ARG UUID
 ARG UGID
 
-RUN useradd -m $USER && \
-    echo "$USER:$USER" | chpasswd && \
-    usermod --shell /bin/bash $USER && \
-    usermod -aG sudo $USER && \
-    echo "$USER ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/$USER && \
-    chmod 0440 /etc/sudoers.d/$USER && \
-    usermod --uid $UUID $USER && \
-    groupmod --gid $UGID $USER
+RUN useradd -m ${USERNAME} && \
+    echo "${USERNAME}:${USERNAME}" | chpasswd && \
+    usermod --shell /bin/bash ${USERNAME} && \
+    usermod -aG sudo ${USERNAME} && \
+    echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/${USERNAME} && \
+    chmod 0440 /etc/sudoers.d/${USERNAME} && \
+    usermod --uid ${UUID} ${USERNAME} && \
+    groupmod --gid ${UGID} ${USERNAME}
 
 # Copy workspace script to docker image
 COPY ./rootfs/ /

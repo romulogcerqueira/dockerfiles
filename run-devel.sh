@@ -47,8 +47,8 @@ if [ ! "$(docker ps -q -f name=${CONTAINER_NAME}_devel)" ]; then
             --volume="${SONARSIM_PATH}:${HOME}:rw" \
             --volume="/etc/localtime:/etc/localtime:ro" \
             --env="TERM" \
-            --user="${USER}" \
-            --workdir="/home/${USER}" \
+            --user="${PROJECT}" \
+            --workdir="/home/${PROJECT}" \
             --name ${CONTAINER_NAME}_devel \
             --privileged \
             --runtime=nvidia \
@@ -56,6 +56,7 @@ if [ ! "$(docker ps -q -f name=${CONTAINER_NAME}_devel)" ]; then
             --volume=${XAUTH}:${XAUTH}:rw \
             --env=XAUTHORITY=${XAUTH} \
             --env=DISPLAY \
+            --hostname ${DISTRO} \
             ${CONTAINER_NAME}:devel
     fi
     echo "Start docker"
