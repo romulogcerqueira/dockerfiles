@@ -15,11 +15,11 @@ function usage() {
 while [ -n "$1" ]; do
     case $1 in
         -h|--help) usage;;
-        --distro)
+        -d|--distro)
             DISTRO=$2
             shift
             ;;
-        --project)
+        -p|--project)
             PROJECT=$2
             shift
             ;;
@@ -47,8 +47,9 @@ esac
 IMAGE_NAME=${PROJECT}_${DISTRO}:devel
 
 docker build  \
-    --build-arg BASE_IMAGE=$BASE_IMAGE \
-    --build-arg USER=$USER \
-    --build-arg UUID=$UUID \
-    --build-arg UGID=$UGID \
+    --build-arg BASE_IMAGE=${BASE_IMAGE} \
+    --build-arg USERNAME=${CONTAINER_USER} \
+    --build-arg UUID=${UUID} \
+    --build-arg UGID=${UGID} \
+    --compress \
     -t ${PROJECT}_${DISTRO}:devel .

@@ -4,9 +4,9 @@ LABEL maintainer "Rômulo Cerqueira <romulogcerqueira@gmail.com>"
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get update && \
-    apt-get install -y software-properties-common && \
-    add-apt-repository ppa:brightbox/ruby-ng && \
+RUN apt-get update > /dev/null 2>&1 && \
+    apt-get install -y software-properties-common > /dev/null 2>&1 && \
+    add-apt-repository ppa:brightbox/ruby-ng > /dev/null 2>&1 && \
     apt-get update && apt-get install -y --no-install-recommends \
         apt-utils \
         bash-completion \
@@ -17,11 +17,10 @@ RUN apt-get update && \
         pkg-config \
         ruby2.5 \
         ruby2.5-dev \
+        ssh-client \
         sudo \
         tzdata \
-        wget && \
-    curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash && \
-    apt-get install -y git-lfs && \
+        wget > /dev/null 2>&1 && \
     apt-get clean && \
     echo "Binary::apt::APT::Keep-Downloaded-Packages \"true\";" | tee /etc/apt/apt.conf.d/bir-keep-cache && \
     rm -rf /etc/apt/apt.conf.d/docker-clean && \
@@ -35,18 +34,18 @@ ENV LANG=en_US.UTF-8 \
     QT_X11_NO_MITSHM=1
 
 # Replicate host user to the docker image
-ARG USER
+ARG USERNAME
 ARG UUID
 ARG UGID
 
-RUN useradd -m $USER && \
-    echo "$USER:$USER" | chpasswd && \
-    usermod --shell /bin/bash $USER && \
-    usermod -aG sudo $USER && \
-    echo "$USER ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/$USER && \
-    chmod 0440 /etc/sudoers.d/$USER && \
-    usermod --uid $UUID $USER && \
-    groupmod --gid $UGID $USER
+RUN useradd -m ${USERNAME} && \
+    echo "${USERNAME}:${USERNAME}" | chpasswd && \
+    usermod --shell /bin/bash ${USERNAME} && \
+    usermod -aG sudo ${USERNAME} && \
+    echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/${USERNAME} && \
+    chmod 0440 /etc/sudoers.d/${USERNAME} && \
+    usermod --uid ${UUID} ${USERNAME} && \
+    groupmod --gid ${UGID} ${USERNAME}
 
 # Copy workspace script to docker image
 COPY ./rootfs/ /

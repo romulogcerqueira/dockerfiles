@@ -2,8 +2,8 @@
 
 set -e
 
-cd ~/sonar_simulator/
+cd ~/dev/
 . ./env.sh
-aup
-amake
+aup --no-interactive
+amake --no-interactive
 reset-omniorb

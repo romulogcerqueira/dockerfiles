@@ -1,6 +1,6 @@
 #!/bin/sh
 
-BOOTSTRAP_URL=git@github.com:Brazilian-Institute-of-Robotics/bir.jiro-buildconf.git
+BOOTSTRAP_URL="git@github.com:romulogcerqueira/sonar_simulation-buildconf.git"
 
 set -e
 
@@ -9,4 +9,4 @@ export AUTOPROJ_BOOTSTRAP_IGNORE_NONEMPTY_DIR=1
 
 cd ~/dev/
 . ./env.sh
-autoproj bootstrap git ${BOOTSTRAP_URL}
+autoproj bootstrap git ${BOOTSTRAP_URL} --no-interactive
