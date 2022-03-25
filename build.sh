@@ -48,7 +48,7 @@ IMAGE_NAME=${PROJECT}_${DISTRO}:devel
 
 docker build  \
     --build-arg BASE_IMAGE=${BASE_IMAGE} \
-    --build-arg USERNAME=${PROJECT} \
+    --build-arg USERNAME=${CONTAINER_USER} \
     --build-arg UUID=${UUID} \
     --build-arg UGID=${UGID} \
     --compress \
