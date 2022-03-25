@@ -44,7 +44,7 @@ if [ ! "$(docker ps -q -f name=${CONTAINER_NAME}_devel)" ]; then
         echo "Create docker"
         docker create -it \
             --net host \
-            --volume="${SONARSIM_PATH}:${HOME}:rw" \
+            --volume="${PROJECT_PATH}:${HOME}:rw" \
             --volume="/etc/localtime:/etc/localtime:ro" \
             --env="TERM" \
             --user="${PROJECT}" \
