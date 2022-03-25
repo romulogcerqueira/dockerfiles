@@ -4,9 +4,9 @@ LABEL maintainer "Rômulo Cerqueira <romulogcerqueira@gmail.com>"
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get update && \
-    apt-get install -y software-properties-common && \
-    add-apt-repository ppa:brightbox/ruby-ng && \
+RUN apt-get update > /dev/null 2>&1 && \
+    apt-get install -y software-properties-common > /dev/null 2>&1 && \
+    add-apt-repository ppa:brightbox/ruby-ng > /dev/null 2>&1 && \
     apt-get update && apt-get install -y --no-install-recommends \
         apt-utils \
         bash-completion \
@@ -17,11 +17,10 @@ RUN apt-get update && \
         pkg-config \
         ruby2.5 \
         ruby2.5-dev \
+        ssh-client \
         sudo \
         tzdata \
-        wget && \
-    curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash && \
-    apt-get install -y git-lfs && \
+        wget > /dev/null 2>&1 && \
     apt-get clean && \
     echo "Binary::apt::APT::Keep-Downloaded-Packages \"true\";" | tee /etc/apt/apt.conf.d/bir-keep-cache && \
     rm -rf /etc/apt/apt.conf.d/docker-clean && \
