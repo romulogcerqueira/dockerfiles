@@ -9,4 +9,4 @@ export AUTOPROJ_BOOTSTRAP_IGNORE_NONEMPTY_DIR=1
 
 cd ~/dev/
 . ./env.sh
-autoproj bootstrap git ${BOOTSTRAP_URL}
+autoproj bootstrap git ${BOOTSTRAP_URL} --no-interactive
