@@ -44,7 +44,6 @@ if [ ! "$(docker ps -q -f name=${CONTAINER_NAME}_devel)" ]; then
     if [ ! "$(docker ps -aq -f status=exited -f name=${CONTAINER_NAME}_devel)" ]; then
         echo "Create docker"
         docker create -it \
-            --net host \
             --volume="${PROJECT_PATH}:/home/${CONTAINER_USER}:rw" \
             --volume="/etc/localtime:/etc/localtime:ro" \
             --env="TERM" \
